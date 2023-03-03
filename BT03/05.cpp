@@ -1,40 +1,44 @@
 #include <iostream>
 
+using namespace std;
+
 int main()
 {
-    int x, y; std::cin >> x >> y;
-    int a[x][y];
-    int num = 1, row = x, col = y, round = 0;
-    //a[round][round] la phan tu goc trai cua moi vong
-    //qua moi vong thi thu hep goc duoi phai va goc tren trai: col--, row--, round++
-    while(num <= x * y){
-        for(int j = round; j < col; j++){
-            a[round][j] = num;
+    int m, n;
+    cin >> m >> n;
+    int num = 1;
+    int upLeft = 0;
+    int a[m][n];
+    int m1 = m, n1 = n;
+    while(num <= m1 * n1){
+        for(int j = upLeft; j < n; j++){
+            a[upLeft][j] = num;
             num++;
         }
-        if(row - 1 > round){
-            for(int i = round + 1; i < row; i++){
-                a[i][col - 1] = num;
+        if(m - 1 > upLeft){
+            for(int i = upLeft + 1; i < m; i++){
+                a[i][n - 1] = num;
                 num++;
             }
-            for(int j = col - 2; j >= round; j--){
-                a[row - 1][j] = num;
-                num++;
-            }
-            for(int i = row - 2; i > round; i--){
-                a[i][round] = num;
-                num++;
+            if(n - 1 > upLeft){
+                for(int j = n - 2; j >= upLeft; j--){
+                    a[m - 1][j] = num;
+                    num++;
+                }
+                for(int i = m - 2; i > upLeft; i--){
+                    a[i][upLeft] = num;
+                    num++;
+                }
             }
         }
-        round++;
-        row--;
-        col--;
+        upLeft++;
+        m--; n--;
     }
 
-    for(int i = 0; i < x; i++){
-        for(int j = 0; j < y; j++)
-            std::cout << a[i][j] << ' ';
-        std::cout << '\n';
+    for(int i = 0; i < m1; i++){
+        for(int j = 0; j < n1; j++)
+            cout << a[i][j] << ' ';
+        cout << endl;
     }
     return 0;
 }
