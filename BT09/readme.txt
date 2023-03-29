@@ -10,4 +10,8 @@ And part D:
 6. (iii) number = aPtr; //Not the same date type(int & pointer to int)
 7. (iii) for (int i=0; i<N; i++) cout << *(p+i) << “ “;
 8. (iv) 5 6;
-9. (
+9. (ii) 6;  //Only void b(int* p) {(*p)++;} changed the value of pointer p
+10.(iv) 10 20 20 20 30 30;
+11.(iii) 20 30 20;
+12.(iii) *(p+2);
+13.(iii) *p+1  là giá trị của p[1];
