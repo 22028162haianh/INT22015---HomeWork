@@ -1,57 +1,89 @@
 #include <iostream>
+#include <string>
 #include <vector>
-
-#define MAX 100001
+#include <cmath>
 
 using namespace std;
 
-int n;
-vector<vector<char>> a;
-
-void print()
+class hadama
 {
-    for(int i = 0; i < 2 * n; i++){
-            for(int j = 0; j < 2 * n; j++)
-                cout << a[i][j] << ' ';
+private:
+    int size;
+    vector<vector<char>> hada;
+public:
+    void generate_hada(int x){
+        hadama tmp(x / 2);
+        vector<vector<char>> v1 = tmp.get_hada();
+        vector<vector<char>> v2 = tmp.get_convert_hada();
+        int n = tmp.get_size();
+        for(int i = 0; i < n; i++){
+            vector<char> v;
+            for(int j = 0; j < n; j++){
+                char c = v1[i][j];
+                v.push_back(c);
+            }
+            for(int j = 0; j < n; j++){
+                char c = v1[i][j];
+                v.push_back(c);
+            }
+            hada.push_back(v);
+        }
+        for(int i = 0; i < n; i++){
+            vector<char> v;
+            for(int j = 0; j < n; j++){
+                char c = v1[i][j];
+                v.push_back(c);
+            }
+            for(int j = 0; j < n; j++){
+                char c = v2[i][j];
+                v.push_back(c);
+            }
+            hada.push_back(v);
+        }
+    }
+    hadama(int x){
+        size = x;
+        if(size == 1){
+            vector<char> v;
+            v.push_back('.');
+            hada.push_back(v);
+        }
+        else{
+            generate_hada(size);
+        }
+    }
+
+    vector<vector<char>> get_hada() {return hada;}
+
+    vector<vector<char>> get_convert_hada(){
+        vector<vector<char>> ans = hada;
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                if(hada[i][j] == '.') ans[i][j] = 'o';
+                else ans[i][j] = '.';
+            }
+        }
+        return ans;
+    }
+
+    int get_size() {return size;}
+
+    void print()
+    {
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                cout << hada[i][j] << ' ';
+            }
             cout << endl;
         }
-}
-
-void reverseV(vector<vector<char>> b)
-{
-    for(int i = 0; i < b.size(); i++){
-        for(int j = 0; j < b[i].size(); i++)
-            if(b[i][j] == '.') b[i][j] = 'o';
-            else b[i][j] = '.';
     }
-}
+};
 
-void hadaMard(int x)
+int main ()
 {
-    if(x == 1){
-        // . .
-        // . o
-        vector<char> c1;
-        c1.push_back('.');
-        c1.push_back('.');
-        vector<char> c2;
-        c2.push_back('.');
-        c2.push_back('o');
-        a.push_back(c2);
-        a.push_back(c1);
-    }
-    if(x == n) {
-        print();
-        return;
-    }
-    vector<vector<char>> b = a;
-    
-    hadaMard(x + 1);
-}
-
-int main()
-{
-    cin >> n;
-    hadaMard(1);
+    int n; cin >> n;
+    int pn = pow(2, n);
+    hadama x(pn);
+    x.print();
     return 0;
 }
